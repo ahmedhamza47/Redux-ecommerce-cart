@@ -20,12 +20,18 @@ export const CLEAR_CART = "CLEAR_CART";
 // }
 
 export const getProductsAction = () => async (dispatch: any) => {
-  const response = await initApiRequest("/overallProducts", {}, "GET");
+  try{
+    const response = await initApiRequest("/overallProducts", {}, "GET");
+
+    dispatch({
+      type: GET_PRODUCTS,
+      payload: response,
+    });
+  }
+  catch(err){
+    console.log(err, 'please start the json server first')
+  }
   // console.log(response, "response")
-  dispatch({
-    type: GET_PRODUCTS,
-    payload: response,
-  });
 };
 export const addToCartAction =
   (product: any, amount: any) => async (dispatch: any, other: any) => {
@@ -81,15 +87,14 @@ export const decreaseQtyAction =
     const updatedItem = await initApiRequest(
       `/cartProducts/${product.id}`,
       {
-        ...temp,
-        qty: temp,
+      ...temp
       },
       "PATCH"
     );
 
     dispatch({
-      type: DECREASE_QTY,
-      payload: updatedItem?.data,
+      type:  "UPDATE_CART",
+      payload: updatedItem.data,
     });
   };
 export const increaseQtyFromCartAction =
@@ -119,8 +124,17 @@ export const deccreaseQtyFromCardAction =
       payload: temp,
     });
   };
-export const clearCart = () => (dispatch: any) => {
+export const clearCart = (ids:any) => async(dispatch: any) => {
+    
+    ids.forEach(async (id:any) => {
+     // console.log(id, "//////////////////")
+  await initApiRequest(`/cartProducts/${id}`, {}, "DELETE");
+    });
+  const newCartList = await initApiRequest("/cartProducts", {}, "GET");
+
   dispatch({
     type: CLEAR_CART,
+    payload: newCartList.data,
+   
   });
 };

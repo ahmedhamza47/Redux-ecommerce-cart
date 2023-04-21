@@ -3,31 +3,22 @@
     {
       "id": 1,
       "name": "Iphone",
-      "src": "./src/assets/Images/iphone.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Laptop",
-      "src": "./src/assets/Images/laptop.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Jutta",
-      "src": "./src/assets/Images/download.jpg"
-    }
-  ],
-  "cartProducts": [
-    {
-      "id": 1,
-      "name": "Iphone",
       "src": "./src/assets/Images/iphone.jpg",
-      "qty": 43
+      "price": 5000
     },
     {
       "id": 2,
       "name": "Laptop",
       "src": "./src/assets/Images/laptop.jpg",
-      "qty": 5
+      "price": 8000
+
+    },
+    {
+      "id": 3,
+      "name": "Jutta",
+      "src": "./src/assets/Images/download.jpg",
+      "price": 2100
     }
-  ]
+  ],
+  "cartProducts": []
 }

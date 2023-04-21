@@ -5,12 +5,16 @@ import { getProductsAction } from "../../Redux/Cart/Action-Cart";
 export const Cards = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-
-    dispatch(getProductsAction() as any)
+    try{
+      dispatch(getProductsAction() as any)
+    }
+    catch(err){
+      console.log('error')
+    }
     }, [])
   
-    const products = useSelector((state: any) => state.products.products);
-    console.log(products ,'products')
+    const products = useSelector((state: any) => state?.products?.products);
+   // console.log(products ,'products')
   return (
     <div className="flex flex-row justify-center gap-10">
       {products &&
@@ -19,7 +23,7 @@ export const Cards = () => {
             key={index}
             className="bg-white rounded-lg shadow-md overflow-hidden"
           >
-            <Card card={product} source={product.src} name={product.name} id={product.id} />
+            <Card cards = {products} card={product} source={product.src} name={product.name} id={product.id} price = {product.price} />
           </div>
         ))}
     </div>

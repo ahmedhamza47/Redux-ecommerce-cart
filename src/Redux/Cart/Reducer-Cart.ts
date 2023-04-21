@@ -141,9 +141,9 @@ export const cartReducer = (state = initialState, action: any) => {
         };
       }
     case "CLEAR_CART":
-      state.cart = [];
+  
       return {
-        cart: [],
+        cart: action.payload,
       };
     default:
       return state;

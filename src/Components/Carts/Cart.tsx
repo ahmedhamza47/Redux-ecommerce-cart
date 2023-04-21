@@ -61,14 +61,18 @@ const Cart = () => {
       dispatch(decreaseQtyAction(item) as any);
     }
   };
-  const handleCheckout = () => {
+  const handleCheckout = (cartItems:any) => {
     toast.success(
       "You products have been sent to website",
       {
         position: toast.POSITION.TOP_RIGHT,
       }
     );
-    dispatch(clearCart() as any);
+   // console.log(cartItems, "cartItems")
+    const idTobeDeleted = cartItems.map((item:any) => item.id);
+
+   // console.log(idTobeDeleted, "idTobeDeleted//////////")
+    dispatch(clearCart(idTobeDeleted) as any);
   };
   return (
     <div>
@@ -129,7 +133,7 @@ const Cart = () => {
                   <div className="flex flex-row justify-center p-2">
                     <button
                       className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                      onClick={() => handleCheckout()}
+                      onClick={() => handleCheckout(cartItems)}
                     >
                       Checkout
                     </button>

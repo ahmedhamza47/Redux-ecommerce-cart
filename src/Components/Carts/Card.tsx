@@ -14,10 +14,10 @@ import {
 } from "../../Redux/Cart/Action-Cart";
 import { connect, useDispatch, useSelector } from "react-redux";
 
-const Card = ({ card, source, name, id }: any) => {
+const Card = ({ card, source, name, id ,price}: any) => {
   const getData = useSelector((state: any) => state.cart.cart);
   const dispatch = useDispatch();
-  console.log(card, "cardssss");
+  //console.log(card, "cardssss");
  // console.log(data, "data");
   const [amount, setAmount] = useState(0);
   const addToCart = (card: any) => {
@@ -58,6 +58,7 @@ const Card = ({ card, source, name, id }: any) => {
       <img className="h-48 w-full object-cover" src={source} alt={name} />
       <div className="px-4 py-2">
         <h3 className="text-gray-700 font-semibold text-lg mb-2">{name}</h3>
+        <h3 className="text-gray-700 font-semibold text-lg mb-2">Rs.{price}</h3>
 
         <div className="flex flex-row justify-center my-3">
           <button
