@@ -11,7 +11,6 @@
       "name": "Laptop",
       "src": "./src/assets/Images/laptop.jpg",
       "price": 8000
-
     },
     {
       "id": 3,
@@ -20,5 +19,13 @@
       "price": 2100
     }
   ],
-  "cartProducts": []
+  "cartProducts": [
+    {
+      "id": 1,
+      "name": "Iphone",
+      "src": "./src/assets/Images/iphone.jpg",
+      "price": 45000,
+      "qty": 9
+    }
+  ]
 }

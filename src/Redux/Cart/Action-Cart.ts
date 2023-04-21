@@ -3,21 +3,9 @@ import initApiRequest from "../../services/api_request";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-export const INCREASE_QTY_FROM_CART = "INCREASE_QTY_FROM_CART";
-export const INCREASE_QTY_FROM_CARD = "INCREASE_QTY_FROM_CARD";
 export const DECREASE_QTY_FROM_CARD = "DECREASE_QTY_FROM_CARD";
-
-export const DECREASE_QTY = "DECREASE_QTY";
 export const CLEAR_CART = "CLEAR_CART";
 
-//export const SET_AMOUNT = "SET_AMOUNT";
-
-// export function setAmount(amount: any) {
-//   return {
-//     type: SET_AMOUNT,
-//     payload: amount,
-//   };
-// }
 
 export const getProductsAction = () => async (dispatch: any) => {
   try{
@@ -35,7 +23,7 @@ export const getProductsAction = () => async (dispatch: any) => {
 };
 export const addToCartAction =
   (product: any, amount: any) => async (dispatch: any, other: any) => {
-    const temp = { ...product, qty: amount };
+    const temp = { ...product, qty: amount , price: product.price * amount};
     // console.log(temp, "temp");
     const products = await initApiRequest("/cartProducts", {}, "GET");
 
@@ -48,6 +36,7 @@ export const addToCartAction =
         {
           ...temp,
           qty: previousProduct.qty + amount,
+          price: product.price * (previousProduct.qty + amount),
         },
         "PATCH"
       );
@@ -83,7 +72,7 @@ export const removeFromCartAction =
 export const decreaseQtyAction =
   (product: any) => async (dispatch: any, getState: any) => {
     // const {cart :{cart}} = getState()
-    const temp = { ...product, qty: product.qty - 1 };
+    const temp = { ...product, qty: product.qty - 1, price: product.price - product.price/product.qty };
     const updatedItem = await initApiRequest(
       `/cartProducts/${product.id}`,
       {
@@ -98,24 +87,22 @@ export const decreaseQtyAction =
     });
   };
 export const increaseQtyFromCartAction =
-  (product: any) => (dispatch: any, getState: any) => {
-    // const temp = { ...product, qty: amount };
-    dispatch({
-      type: INCREASE_QTY_FROM_CART,
-      payload: product,
-    });
-  };
-export const increaseQtyFromCardAction =
-  (product: any, amount: any) => (dispatch: any, getState: any) => {
-    // const temp = { ...product, qty: amount };
-    console.log(product, "product");
+  (product: any) =>async (dispatch: any, getState: any) => {
+    const temp = { ...product, qty: product.qty +1 , price: product.price +product.price/product.qty };
+    const updatedItem = await initApiRequest(
+      `/cartProducts/${product.id}`,
+      {
+      ...temp
+      },
+      "PATCH"
+    );
 
     dispatch({
-      type: INCREASE_QTY_FROM_CARD,
-      payload: product,
-      amt: amount,
+      type:  "UPDATE_CART",
+      payload: updatedItem.data,
     });
   };
+
 export const deccreaseQtyFromCardAction =
   (product: any, amount: any) => (dispatch: any, getState: any) => {
     const temp = { ...product, qty: amount };
@@ -138,3 +125,5 @@ export const clearCart = (ids:any) => async(dispatch: any) => {
    
   });
 };
+
+

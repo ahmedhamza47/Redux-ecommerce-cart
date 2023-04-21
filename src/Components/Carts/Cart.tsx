@@ -9,7 +9,7 @@ import {
 } from "../../Redux/Cart/Action-Cart";
 import { HiTrash } from "react-icons/hi";
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 
 const Msg = ({ closeToast, toastProps, item }: any) => {
   const dispatch = useDispatch();
@@ -45,6 +45,7 @@ const Cart = () => {
   const [toggleView, setToggleView] = useState(false);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state?.cart?.cart);
+  const total = useState<any>(0);
   //const qty = useSelector((state: any) => state?.amounts?.amount);
   // console.log(cartItems, "cartItems");
   //console.log(qty, "qty");
@@ -61,22 +62,27 @@ const Cart = () => {
       dispatch(decreaseQtyAction(item) as any);
     }
   };
-  const handleCheckout = (cartItems:any) => {
-    toast.success(
-      "You products have been sent to website",
-      {
-        position: toast.POSITION.TOP_RIGHT,
-      }
-    );
-   // console.log(cartItems, "cartItems")
-    const idTobeDeleted = cartItems.map((item:any) => item.id);
+  const handleCheckout = (cartItems: any) => {
+    toast.success("You products have been sent to website", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    // console.log(cartItems, "cartItems")
+    const idTobeDeleted = cartItems.map((item: any) => item.id);
 
-   // console.log(idTobeDeleted, "idTobeDeleted//////////")
+    // console.log(idTobeDeleted, "idTobeDeleted//////////")
     dispatch(clearCart(idTobeDeleted) as any);
   };
+  const getTotal = () => {
+    let total = 0;
+    cartItems?.map((item: any) => { 
+      total += item.price;
+    });
+    return total;
+  };
+
   return (
     <div>
-      <div className="relative inline-block text-left">
+      <div className="relative inline-block text-left mt-0">
         <button
           className="inline-flex gap-4 items-center justify-center w-full p-2 text-sm font-medium text-gray-700 bg-white rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           onClick={() => {
@@ -86,8 +92,8 @@ const Cart = () => {
           <BsFillCartCheckFill />
         </button>
         {toggleView && (
-          <div className=" flex flex-col items-center  absolute right-0 w-56  mt-2  border border-gray-200 rounded-md shadow-lg">
-            <div className=" py-2 px-3 text-sm font-medium w-full flex flex-row justify-center text-gray-700 bg-gray-100">
+          <div className=" flex flex-col items-center  absolute z-50 right-0 w-56  mt-2  border border-gray-200 rounded-md shadow-lg bg-gray-100">
+            <div className="bg-white py-2 px-3 text-sm font-medium w-full flex flex-row justify-center text-gray-700 ">
               Your Cart
             </div>
 
@@ -97,11 +103,11 @@ const Cart = () => {
                   {cartItems.map((item: any, index: any) => (
                     <div key={index}>
                       <div
-                        className="flex flex-row justify-center  py-2 w-56 hover:bg-gray-300  "
+                        className="flex flex-row justify-center  py-2 w-56 hover:bg-gray-200  "
                         key={item.id}
                       >
                         <div className="flex flex-row justify-between w-36 ">
-                          <div className="flex flex-col items-start">
+                          <div className="flex-col items-start">
                             <p className="text-sm text-gray-500">{item.name}</p>
                             {item.qty && (
                               <div className="flex flex-row">
@@ -122,14 +128,20 @@ const Cart = () => {
                                 </button>
                               </div>
                             )}
+                            <p className="text-sm text-gray-500 ">Price : ${item.price}</p>
                           </div>
-                          <button onClick={() => handleDelete(item)}>
+                          <button onClick={() => handleDelete(item)} className="hover:text-red-700">
                             <HiTrash />
                           </button>
                         </div>
                       </div>
                     </div>
                   ))}
+
+                      <div className="flex flex-row ml-8 p-2">
+                     <p>Total : ${getTotal()}  </p>
+                  
+                  </div>
                   <div className="flex flex-row justify-center p-2">
                     <button
                       className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"

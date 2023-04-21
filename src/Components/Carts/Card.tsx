@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from "react-icons/ai";
-import Laptop from "../../assets/Images/laptop.jpg";
-import Iphone from "../../assets/Images/iphone.jpg";
-import Shoes from "../../assets/Images/download.jpg";
-import { toast, ToastContainer } from "react-toastify";
+
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   addToCartAction,
-  deccreaseQtyFromCardAction,
-  getProductsAction,
-  decreaseQtyAction,
-  increaseQtyFromCardAction,
+
+  deccreaseQtyFromCardAction
+
 } from "../../Redux/Cart/Action-Cart";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 const Card = ({ card, source, name, id ,price}: any) => {
-  const getData = useSelector((state: any) => state.cart.cart);
   const dispatch = useDispatch();
   //console.log(card, "cardssss");
  // console.log(data, "data");
@@ -70,18 +66,7 @@ const Card = ({ card, source, name, id ,price}: any) => {
             <AiOutlineMinusSquare />
           </button>
           <p className="text-gray-500 mx-3">
-            {/* {getData[card.id - 1]?.qty ? getData[card.id - 1].qty : 0} */}
-            {/* {getData.length > 0
-                    ? getData?.map((item: any) => {
-                        if (item.id === card.id) {
-                          return item.qty;
-                        }
-                        return 0;
-                        console.log(item, "item");
-                      })
-                    : 0} */}
-            {/* 
-            {getData.find((item: any) => item.id === id)?.qty || 0} */}
+        
             {amount}
           </p>
           <button className="text-xl" onClick={() => increaseQty(card)}>

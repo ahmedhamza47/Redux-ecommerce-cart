@@ -16,12 +16,12 @@ export const Cards = () => {
     const products = useSelector((state: any) => state?.products?.products);
    // console.log(products ,'products')
   return (
-    <div className="flex flex-row justify-center gap-10">
+    <div className="flex  flex-row justify-center gap-10">
       {products &&
         products.map((product:any, index:any) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+            className="bg-white rounded-lg shadow-2xl w-56 overflow-hidden"
           >
             <Card cards = {products} card={product} source={product.src} name={product.name} id={product.id} price = {product.price} />
           </div>
