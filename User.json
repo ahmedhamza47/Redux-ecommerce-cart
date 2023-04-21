@@ -4,28 +4,20 @@
       "id": 1,
       "name": "Iphone",
       "src": "./src/assets/Images/iphone.jpg",
-      "price": 5000
+      "price": 300
     },
     {
       "id": 2,
       "name": "Laptop",
       "src": "./src/assets/Images/laptop.jpg",
-      "price": 8000
+      "price": 800
     },
     {
       "id": 3,
       "name": "Jutta",
       "src": "./src/assets/Images/download.jpg",
-      "price": 2100
+      "price": 21
     }
   ],
-  "cartProducts": [
-    {
-      "id": 1,
-      "name": "Iphone",
-      "src": "./src/assets/Images/iphone.jpg",
-      "price": 45000,
-      "qty": 9
-    }
-  ]
+  "cartProducts": []
 }

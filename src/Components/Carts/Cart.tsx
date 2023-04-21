@@ -41,7 +41,7 @@ const Msg = ({ closeToast, toastProps, item }: any) => {
     </div>
   );
 };
-const Cart = () => {
+export const Cart = () => {
   const [toggleView, setToggleView] = useState(false);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state?.cart?.cart);
@@ -163,9 +163,9 @@ const Cart = () => {
     </div>
   );
 };
-const mapStateToProps = (state: any) => ({
-  cart: state.cart,
-  amount: state?.amounts?.amount,
-});
+// const mapStateToProps = (state: any) => ({
+//   cart: state.cart,
+//   amount: state?.amounts?.amount,
+// });
 
-export default connect(mapStateToProps)(Cart);
+// export default connect(mapStateToProps)(Cart);

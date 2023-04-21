@@ -37,10 +37,10 @@ import Axios, {
   
     try {
       const response = await Axios.request(axiosReqParams);
-      console.log(response, "response")
+    //  console.log(response, "response")
       return response;
     } catch (error) {
-      throw error;
+        console.log(error)
     }
   }
   

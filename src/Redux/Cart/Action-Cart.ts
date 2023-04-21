@@ -27,7 +27,7 @@ export const addToCartAction =
     // console.log(temp, "temp");
     const products = await initApiRequest("/cartProducts", {}, "GET");
 
-    if (products.data.find((item: any) => item.id === product.id)) {
+    if ( products && products.data.find((item: any) => item.id === product.id)) {
       const previousProduct = products.data.find(
         (item: any) => item.id === product.id
       );
@@ -43,13 +43,13 @@ export const addToCartAction =
 
       dispatch({
         type: "UPDATE_CART",
-        payload: updatedItem.data,
+        payload: updatedItem && updatedItem.data,
       });
     } else {
       const prod = await initApiRequest("/cartProducts", temp, "POST");
       dispatch({
         type: ADD_TO_CART,
-        payload: prod.data,
+        payload: prod && prod.data,
       });
     }
   };
@@ -66,7 +66,7 @@ export const removeFromCartAction =
     // console.log(prod,'prod')
     dispatch({
       type: REMOVE_FROM_CART,
-      payload: newProdList.data,
+      payload: newProdList && newProdList.data,
     });
   };
 export const decreaseQtyAction =
@@ -83,7 +83,7 @@ export const decreaseQtyAction =
 
     dispatch({
       type:  "UPDATE_CART",
-      payload: updatedItem.data,
+      payload: updatedItem && updatedItem.data,
     });
   };
 export const increaseQtyFromCartAction =
@@ -99,7 +99,7 @@ export const increaseQtyFromCartAction =
 
     dispatch({
       type:  "UPDATE_CART",
-      payload: updatedItem.data,
+      payload: updatedItem && updatedItem.data,
     });
   };
 
@@ -121,7 +121,7 @@ export const clearCart = (ids:any) => async(dispatch: any) => {
 
   dispatch({
     type: CLEAR_CART,
-    payload: newCartList.data,
+    payload:  newCartList && newCartList.data,
    
   });
 };

@@ -54,7 +54,7 @@ const Card = ({ card, source, name, id ,price}: any) => {
       <img className="h-48 w-full object-cover" src={source} alt={name} />
       <div className="px-4 py-2">
         <h3 className="text-gray-700 font-semibold text-lg mb-2">{name}</h3>
-        <h3 className="text-gray-700 font-semibold text-lg mb-2">Rs.{price}</h3>
+        <h3 className="text-gray-700 font-semibold text-lg mb-2">${price}</h3>
 
         <div className="flex flex-row justify-center my-3">
           <button

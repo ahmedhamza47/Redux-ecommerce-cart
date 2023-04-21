@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 // import Counter from "./Components/Counter";
 // import TODO from "./Components/TODO/TODO";
-import Cart from "./Components/Carts/Cart";
+import {Cart} from "./Components/Carts/Cart";
 import { Cards } from "./Components/Carts/Cards";
 import { ToastContainer } from "react-toastify";
 
