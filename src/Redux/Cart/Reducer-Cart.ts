@@ -1,5 +1,6 @@
 import initApiRequest from "../../services/api_request";
-
+import { IActionSchema } from "../Schema";
+import { IProductSchema } from "../Schema";
 interface ICart {
   cart: any[];
 }
@@ -11,7 +12,7 @@ const data = async () => {
 const initialState: ICart = {
   cart: await data(),
 };
-export const cartReducer = (state = initialState, action: any) => {
+export const cartReducer = (state = initialState, action: IActionSchema) => {
   switch (action.type) {
     case "ADD_TO_CART":
     
@@ -48,10 +49,10 @@ export const cartReducer = (state = initialState, action: any) => {
 };
 
 // Define the reducer
-const initialProductState = {
+const initialProductState:IProductSchema = {
   products: [],
 };
-export const getProductReducer = (state = initialProductState, action: any) => {
+export const getProductReducer = (state = initialProductState, action: IActionSchema) => {
   switch (action.type) {
     case "GET_PRODUCTS":
       return {

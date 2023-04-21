@@ -10,6 +10,7 @@ import {
 import { HiTrash } from "react-icons/hi";
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from "react-icons/ai";
 import {  toast } from "react-toastify";
+import { ICardSchema } from "./cart-schema";
 
 const Msg = ({ closeToast, toastProps, item }: any) => {
   const dispatch = useDispatch();
@@ -45,24 +46,23 @@ export const Cart = () => {
   const [toggleView, setToggleView] = useState(false);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state?.cart?.cart);
-  const total = useState<any>(0);
   //const qty = useSelector((state: any) => state?.amounts?.amount);
   // console.log(cartItems, "cartItems");
   //console.log(qty, "qty");
-  const handleDelete = (item: any) => {
+  const handleDelete = (item: ICardSchema) => {
     toast(<Msg item={item} />);
   };
-  const increaseCartQty = (item: any) => {
+  const increaseCartQty = (item: ICardSchema) => {
     dispatch(increaseQtyFromCartAction(item) as any);
   };
-  const decreaseQty = (item: any) => {
+  const decreaseQty = (item: ICardSchema) => {
     if (item.qty === 1) {
       toast(<Msg item={item} />);
     } else {
       dispatch(decreaseQtyAction(item) as any);
     }
   };
-  const handleCheckout = (cartItems: any) => {
+  const handleCheckout = (cartItems: ICardSchema[]) => {
     toast.success("You products have been sent to website", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -74,7 +74,7 @@ export const Cart = () => {
   };
   const getTotal = () => {
     let total = 0;
-    cartItems?.map((item: any) => { 
+    cartItems?.map((item: ICardSchema) => { 
       total += item.price;
     });
     return total;
@@ -100,7 +100,7 @@ export const Cart = () => {
             <div className="flex flex-col items-center">
               {cartItems?.length > 0 ? (
                 <div>
-                  {cartItems.map((item: any, index: any) => (
+                  {cartItems.map((item: ICardSchema, index: number) => (
                     <div key={index}>
                       <div
                         className="flex flex-row justify-center  py-2 w-56 hover:bg-gray-200  "

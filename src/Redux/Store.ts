@@ -11,8 +11,9 @@ const middleware = [thunk]; //there can be multiple middlewares here
 
 const store = createStore(
   rootReducer,
-  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
+export type TStore = ReturnType<typeof rootReducer>;
 
 export default store;

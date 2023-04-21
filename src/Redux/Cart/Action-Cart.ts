@@ -1,33 +1,35 @@
+import { ICardSchema } from "../../Components/Carts/cart-schema";
 import initApiRequest from "../../services/api_request";
-
+import { Dispatch } from "redux";
+import { IActionSchema } from "../Schema";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const DECREASE_QTY_FROM_CARD = "DECREASE_QTY_FROM_CARD";
 export const CLEAR_CART = "CLEAR_CART";
 
+export const getProductsAction =
+  () => async (dispatch: Dispatch<IActionSchema>) => {
+    try {
+      const response = await initApiRequest("/overallProducts", {}, "GET");
 
-export const getProductsAction = () => async (dispatch: any) => {
-  try{
-    const response = await initApiRequest("/overallProducts", {}, "GET");
-
-    dispatch({
-      type: GET_PRODUCTS,
-      payload: response,
-    });
-  }
-  catch(err){
-    console.log(err, 'please start the json server first')
-  }
-  // console.log(response, "response")
-};
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: response,
+      });
+    } catch (err) {
+      console.log(err, "please start the json server first");
+    }
+    // console.log(response, "response")
+  };
 export const addToCartAction =
-  (product: any, amount: any) => async (dispatch: any, other: any) => {
-    const temp = { ...product, qty: amount , price: product.price * amount};
+  (product: ICardSchema, amount: number) =>
+  async (dispatch: Dispatch<IActionSchema>) => {
+    const temp = { ...product, qty: amount, price: product.price * amount };
     // console.log(temp, "temp");
     const products = await initApiRequest("/cartProducts", {}, "GET");
 
-    if ( products && products.data.find((item: any) => item.id === product.id)) {
+    if (products && products.data.find((item: any) => item.id === product.id)) {
       const previousProduct = products.data.find(
         (item: any) => item.id === product.id
       );
@@ -54,7 +56,7 @@ export const addToCartAction =
     }
   };
 export const removeFromCartAction =
-  (product: any) => async (dispatch: any, getState: any) => {
+  (product: ICardSchema) => async (dispatch: Dispatch<IActionSchema>) => {
     const deletedProd = await initApiRequest(
       `/cartProducts/${product.id}`,
       {},
@@ -70,60 +72,66 @@ export const removeFromCartAction =
     });
   };
 export const decreaseQtyAction =
-  (product: any) => async (dispatch: any, getState: any) => {
+  (product: ICardSchema) => async (dispatch: Dispatch<IActionSchema>) => {
     // const {cart :{cart}} = getState()
-    const temp = { ...product, qty: product.qty - 1, price: product.price - product.price/product.qty };
+    const temp = {
+      ...product,
+      qty: product.qty - 1,
+      price: product.price - product.price / product.qty,
+    };
     const updatedItem = await initApiRequest(
       `/cartProducts/${product.id}`,
       {
-      ...temp
+        ...temp,
       },
       "PATCH"
     );
 
     dispatch({
-      type:  "UPDATE_CART",
+      type: "UPDATE_CART",
       payload: updatedItem && updatedItem.data,
     });
   };
 export const increaseQtyFromCartAction =
-  (product: any) =>async (dispatch: any, getState: any) => {
-    const temp = { ...product, qty: product.qty +1 , price: product.price +product.price/product.qty };
+  (product: ICardSchema) => async (dispatch: Dispatch<IActionSchema>) => {
+    const temp = {
+      ...product,
+      qty: product.qty + 1,
+      price: product.price + product.price / product.qty,
+    };
     const updatedItem = await initApiRequest(
       `/cartProducts/${product.id}`,
       {
-      ...temp
+        ...temp,
       },
       "PATCH"
     );
 
     dispatch({
-      type:  "UPDATE_CART",
+      type: "UPDATE_CART",
       payload: updatedItem && updatedItem.data,
     });
   };
 
 export const deccreaseQtyFromCardAction =
-  (product: any, amount: any) => (dispatch: any, getState: any) => {
+  (product: ICardSchema, amount: number) =>
+  (dispatch: Dispatch<IActionSchema>) => {
     const temp = { ...product, qty: amount };
     dispatch({
       type: DECREASE_QTY_FROM_CARD,
       payload: temp,
     });
   };
-export const clearCart = (ids:any) => async(dispatch: any) => {
-    
-    ids.forEach(async (id:any) => {
-     // console.log(id, "//////////////////")
-  await initApiRequest(`/cartProducts/${id}`, {}, "DELETE");
+export const clearCart =
+  (ids: number[]) => async (dispatch: Dispatch<IActionSchema>) => {
+    ids.forEach(async (id: number) => {
+      // console.log(id, "//////////////////")
+      await initApiRequest(`/cartProducts/${id}`, {}, "DELETE");
     });
-  const newCartList = await initApiRequest("/cartProducts", {}, "GET");
+    const newCartList = await initApiRequest("/cartProducts", {}, "GET");
 
-  dispatch({
-    type: CLEAR_CART,
-    payload:  newCartList && newCartList.data,
-   
-  });
-};
-
-
+    dispatch({
+      type: CLEAR_CART,
+      payload: newCartList && newCartList.data,
+    });
+  };

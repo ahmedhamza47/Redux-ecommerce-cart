@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import { useEffect } from "react";
 import { getProductsAction } from "../../Redux/Cart/Action-Cart";
+import { ICardSchema } from "./cart-schema";
+import { TStore } from "../../Redux/Store";
 export const Cards = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -13,17 +15,17 @@ export const Cards = () => {
     }
     }, [])
   
-    const products = useSelector((state: any) => state?.products?.products);
-   // console.log(products ,'products')
+    const products = useSelector((state: TStore) => state?.products?.products);
+   console.log(products ,'products')
   return (
     <div className="flex  flex-row justify-center gap-10">
       {products &&
-        products.map((product:any, index:any) => (
+        products.map((product: ICardSchema, index:number) => (
           <div
             key={index}
             className="bg-white rounded-lg shadow-2xl w-56 overflow-hidden"
-          >
-            <Card cards = {products} card={product} source={product.src} name={product.name} id={product.id} price = {product.price} />
+          > 
+            <Card  card={product} src={product.src} name={product.name} id={product.id} price = {product.price} qty ={product.qty} />
           </div>
         ))}
     </div>
