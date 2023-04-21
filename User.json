@@ -1,0 +1,33 @@
+{
+  "overallProducts": [
+    {
+      "id": 1,
+      "name": "Iphone",
+      "src": "./src/assets/Images/iphone.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Laptop",
+      "src": "./src/assets/Images/laptop.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Jutta",
+      "src": "./src/assets/Images/download.jpg"
+    }
+  ],
+  "cartProducts": [
+    {
+      "id": 1,
+      "name": "Iphone",
+      "src": "./src/assets/Images/iphone.jpg",
+      "qty": 43
+    },
+    {
+      "id": 2,
+      "name": "Laptop",
+      "src": "./src/assets/Images/laptop.jpg",
+      "qty": 5
+    }
+  ]
+}
